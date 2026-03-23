@@ -236,12 +236,20 @@ export const MentorDashboard = () => {
                   — modules matching your expertise
                 </span>
               </h3>
-              <button
-                style={{ padding: '8px 18px', background: '#065f46', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600, fontSize: 13 }}
-                onClick={() => window.location.href = '/admin/modules/new'}
-              >
-                + Submit New Module
-              </button>
+              <div style={{ display: 'flex', gap: 10 }}>
+                <button
+                  style={{ padding: '8px 18px', background: '#065f46', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600, fontSize: 13 }}
+                  onClick={() => window.location.href = '/admin/modules/new'}
+                >
+                  + Submit New Module
+                </button>
+                <button
+                  style={{ padding: '8px 18px', background: '#1d4ed8', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600, fontSize: 13 }}
+                  onClick={() => window.location.href = '/admin/assessments/new'}
+                >
+                  + Create Assessment
+                </button>
+              </div>
             </div>
 
             {loadingMods && <p style={{ color: '#94a3b8' }}>Loading modules...</p>}

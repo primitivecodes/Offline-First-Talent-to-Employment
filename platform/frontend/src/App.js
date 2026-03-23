@@ -57,7 +57,7 @@ function AppInner() {
 
         {/* Admin tools */}
        <Route path="/admin/modules/new"     element={<ProtectedRoute roles={['admin','mentor']}><AdminModuleForm /></ProtectedRoute>} />
-        <Route path="/admin/assessments/new" element={<ProtectedRoute roles={['admin']}><AdminAssessmentForm /></ProtectedRoute>} />
+        <Route path="/admin/assessments/new" element={<ProtectedRoute roles={['admin','mentor']}><AdminAssessmentForm /></ProtectedRoute>} />
         <Route path="/admin/submissions"     element={<ProtectedRoute roles={['admin']}><AdminSubmissions /></ProtectedRoute>} />
 
         {/* 404 */}
