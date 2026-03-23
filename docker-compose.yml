@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: alu-talent-backend
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - JWT_SECRET=${JWT_SECRET}
+      - DB_PATH=/app/data/database.sqlite
+      - MTN_MOMO_BASE_URL=${MTN_MOMO_BASE_URL}
+      - MTN_MOMO_SUBSCRIPTION_KEY=${MTN_MOMO_SUBSCRIPTION_KEY}
+      - MTN_MOMO_API_USER=${MTN_MOMO_API_USER}
+      - MTN_MOMO_API_KEY=${MTN_MOMO_API_KEY}
+      - MTN_MOMO_ENVIRONMENT=${MTN_MOMO_ENVIRONMENT}
+      - MTN_MOMO_CURRENCY=${MTN_MOMO_CURRENCY}
+      - MTN_MOMO_CALLBACK_URL=${MTN_MOMO_CALLBACK_URL}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - FRONTEND_URL=${FRONTEND_URL}
+      - LEARNER_REGISTRATION_FEE=10
+      - EMPLOYER_MONTHLY_FEE=20
+    volumes:
+      - backend_data:/app/data
+      - backend_uploads:/app/uploads
+    networks:
+      - app-network
+    expose:
+      - "5000"
+
+  frontend:
+    build: ./frontend
+    container_name: alu-talent-frontend
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  backend_data:
+  backend_uploads:
+
+networks:
+  app-network:
+    driver: bridge
