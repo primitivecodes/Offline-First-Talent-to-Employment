@@ -49,7 +49,7 @@ setInterval(() => {
 
 // Login: 10 attempts per 1 minutes per IP
 const loginLimiter = createRateLimit({
-  windowMs: 1 * 60 * 1000,
+  windowMs: 0 * 60 * 1000,
   max: 10,
   message: 'Too many login attempts. Please wait 1 minutes and try again.',
 });
