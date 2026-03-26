@@ -23,33 +23,32 @@ const initiateLearnerPayment = async (req, res) => {
     if (!phone) {
       return res.status(400).json({ message: 'MTN Mobile Money phone number is required.' });
     }
-
-    const { referenceId, amountRWF } = await requestPayment(
+const { referenceId, amount, currency } = await requestPayment(
       phone,
       LEARNER_FEE_USD,
-      'ALU Platform – Course Access Fee',
+      'ALU Platform Course Access Fee',
       `Learner access for ${user.name}`
     );
 
-    // Record the pending payment
     const payment = await Payment.create({
-      userId: user.id,
-      type: 'learner_access',
-      amount: amountRWF,
-      currency: 'RWF',
-      amountUSD: LEARNER_FEE_USD,
+      userId:          user.id,
+      type:            'learner_access',
+      amount:          parseFloat(amount),
+      currency:        currency,
+      amountUSD:       LEARNER_FEE_USD,
       phone,
       momoReferenceId: referenceId,
-      status: 'pending',
+      status:          'pending',
     });
 
     return res.status(202).json({
-      message: 'Payment request sent to your phone. Please approve the MTN MoMo prompt.',
-      paymentId: payment.id,
+      message:        'Payment request sent to your phone. Please approve the MTN MoMo prompt.',
+      paymentId:      payment.id,
       referenceId,
-      amountRWF,
-      amountUSD: LEARNER_FEE_USD,
-      checkStatusIn: 10, // seconds before client should poll
+      amount,
+      currency,
+      amountUSD:      LEARNER_FEE_USD,
+      checkStatusIn:  10,
     });
   } catch (err) {
     console.error('Learner payment init error:', err);
@@ -80,33 +79,34 @@ const initiateEmployerPayment = async (req, res) => {
     const existing = await Payment.count({ where: { userId: user.id, type: 'employer_subscription', status: 'successful' } });
     const subscriptionMonth = existing + 1;
 
-    const { referenceId, amountRWF } = await requestPayment(
+ const { referenceId, amount, currency } = await requestPayment(
       phone,
       EMPLOYER_FEE_USD,
-      `ALU Platform – Employer Subscription (Month ${subscriptionMonth})`,
-      `Employer subscription for ${user.name} / ${user.organisation}`
+      `ALU Platform Employer Subscription Month ${subscriptionMonth}`,
+      `Employer subscription for ${user.name}`
     );
 
     const payment = await Payment.create({
-      userId: user.id,
-      type: 'employer_subscription',
-      amount: amountRWF,
-      currency: 'RWF',
-      amountUSD: EMPLOYER_FEE_USD,
+      userId:           user.id,
+      type:             'employer_subscription',
+      amount:           parseFloat(amount),
+      currency:         currency,
+      amountUSD:        EMPLOYER_FEE_USD,
       phone,
-      momoReferenceId: referenceId,
-      status: 'pending',
+      momoReferenceId:  referenceId,
+      status:           'pending',
       subscriptionMonth,
       periodStart,
       periodEnd,
     });
 
     return res.status(202).json({
-      message: 'Payment request sent to your phone. Please approve the MTN MoMo prompt.',
-      paymentId: payment.id,
+      message:       'Payment request sent to your phone. Please approve the MTN MoMo prompt.',
+      paymentId:     payment.id,
       referenceId,
-      amountRWF,
-      amountUSD: EMPLOYER_FEE_USD,
+      amount,
+      currency,
+      amountUSD:     EMPLOYER_FEE_USD,
       periodStart,
       periodEnd,
       checkStatusIn: 10,
