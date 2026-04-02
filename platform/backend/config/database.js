@@ -1,18 +1,27 @@
 const { Sequelize } = require('sequelize');
-const path = require('path');
 require('dotenv').config();
 
-const dbPath = process.env.DB_PATH || './database.sqlite';
+let sequelize;
 
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  // Allow ':memory:' for tests; resolve to absolute path otherwise
-  storage: dbPath === ':memory:' ? ':memory:' : path.resolve(dbPath),
-  logging: process.env.NODE_ENV === 'development' ? console.log : false,
-  define: {
-    timestamps: true,
-    underscored: false,
-  },
-});
+if (process.env.DATABASE_URL) {
+  // Production — PostgreSQL on Render
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+    logging: false,
+  });
+} else {
+  // Development — SQLite locally
+  sequelize = new Sequelize({
+    dialect:  'sqlite',
+    storage:  process.env.DB_PATH || './database.sqlite',
+    logging:  false,
+  });
+}
 
 module.exports = sequelize;
