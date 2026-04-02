@@ -80,7 +80,7 @@ export default App;
 const Landing = () => (
   <div style={{ fontFamily: 'Inter, sans-serif', background: '#fff' }}>
     <nav style={{ background: '#fff', borderBottom: '1px solid #e2e8f0', padding: '14px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <span style={{ fontWeight: 800, fontSize: 16, color: '#1e3a5f' }}>🎓 ALU Talent Platform</span>
+      <span style={{ fontWeight: 800, fontSize: 16, color: '#1e3a5f' }}>🎓 OFTEP</span>
       <div style={{ display: 'flex', gap: 12 }}>
         <a href="/login"    style={{ padding: '8px 18px', color: '#1e3a5f', fontWeight: 600, textDecoration: 'none', fontSize: 14 }}>Log In</a>
         <a href="/register" style={{ padding: '8px 18px', background: '#1d4ed8', color: '#fff', borderRadius: 8, fontWeight: 700, textDecoration: 'none', fontSize: 14 }}>Get Started</a>
@@ -137,7 +137,7 @@ const Landing = () => (
 
     <div style={{ background: '#1e3a5f', color: '#fff', textAlign: 'center', padding: '40px 24px' }}>
       <p style={{ margin: 0, opacity: 0.7, fontSize: 14 }}>
-        © 2025 ALU Talent Platform · Built by Premier Ufitinema · African Leadership University
+        © 2025 OFTEP · Built by Premier Ufitinema · 
       </p>
     </div>
   </div>
