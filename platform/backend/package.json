@@ -23,8 +23,14 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.31.0",
     "sqlite3": "^5.1.6",
+<<<<<<< HEAD
     "uuid": "^9.0.0",
     "xyz": "^5.0.0"
+=======
+    "pg": "^8.x.x",
+    "pg-hstore": "^2.x.x",
+    "uuid": "^9.0.0"
+>>>>>>> 40099dc4cb4c9a374aa9446ca18e83b9e8e12ff3
   },
   "devDependencies": {
     "jest": "^29.5.0",
